@@ -1,6 +1,6 @@
 import React from 'react';
 import { GraphContainer } from './GraphDiv';
-import { GraphComponent } from './graph';
+import { GraphComponent } from './graph.jsx';
 import { TableComponent } from './UserTable';
 
 
