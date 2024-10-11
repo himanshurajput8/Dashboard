@@ -1,4 +1,4 @@
-import React from "react";
+
 
 export function TableComponent(){
     const tableHeaderData = ["FULL NAME", "STATUS", "TYPE", "EMAIL", "SIGNED UP", "USER ID"]

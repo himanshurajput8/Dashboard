@@ -6,7 +6,7 @@ export function GraphContainer(){
             <div className='left-bar-graph-container'>
                  <div className="graph-left-header">
                     <h2>Import data into Front Dashboard</h2>
-                    <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
+                    <span><i className="fa-solid fa-ellipsis-vertical"></i></span>
                  </div>
                  <p>
                     See and talk to your users and leads immediately by importing your data into the Front Dashboard platform.
