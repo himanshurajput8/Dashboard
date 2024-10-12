@@ -34,10 +34,10 @@ export default function AccordionUsage() {
           <li>overview</li>
           <li>Leaderboard</li>
           <li>Add User</li>
-        </AccordionDetails>
+        </AccordionDetails> 
       </Accordion>
 
-      <Accordion defaultExpanded>
+      <Accordion defaultExpanded> 
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"
@@ -142,7 +142,6 @@ export default function AccordionUsage() {
           <li>Error 500</li>
         </AccordionDetails>
       </Accordion>
-
     </div>
   );
-}
+} 
