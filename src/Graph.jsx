@@ -29,10 +29,10 @@ export function GraphComponent() {
 export function BarGraphComponent(){
     const Bardata = [
       {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-      {name: 'Page A', uv: 100, pv: 2400, amt: 2100},
-      {name: 'Page A', uv: 200, pv: 2400, amt: 2000},
-      {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-      {name: 'Page A', uv: 300, pv: 2400, amt: 2000}
+      {name: 'Page B', uv: 100, pv: 2400, amt: 2100},
+      {name: 'Page C', uv: 200, pv: 2400, amt: 2000},
+      {name: 'Page D', uv: 400, pv: 2400, amt: 2400},
+      {name: 'Page E', uv: 300, pv: 2400, amt: 2000}
 
     ];
 
