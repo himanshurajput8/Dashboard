@@ -1,6 +1,6 @@
 
 import { GraphContainer } from './GraphDiv';
-import { GraphComponent } from './graph.jsx';
+import { GraphComponent } from './Graph.jsx';
 import { EnhancedTable } from './table.jsx';
 
 

@@ -297,7 +297,7 @@ export function EnhancedTable() {
         />
       </Paper>
       <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        control={<Switch checked={dense} onChange={handleChangeDense} />} 
         label="Dense padding"
       />
     </Box>

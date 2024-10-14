@@ -1,4 +1,4 @@
-import { BarGraphComponent } from './graph';
+import { BarGraphComponent } from './Graph';
 
 export function GraphContainer(){
     return(
