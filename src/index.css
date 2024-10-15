@@ -24,6 +24,7 @@ aside button {
   z-index: 1;
   border: none;
   background-color: white;
+  display: none;
 
 }
 
@@ -302,6 +303,10 @@ main{
     font-size: 12px;
   }
   
+  aside button {
+    display: block;
+  }
+
   aside.closed {
     width: 15%; 
     overflow: hidden;
