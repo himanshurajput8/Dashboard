@@ -15,7 +15,7 @@ export default function AccordionUsage() {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <i className="fa-solid fa-house"></i> <h3>Dashboard</h3>
+          <i className="fa-solid fa-house"></i> <h3 className='dashboard'>Dashboard</h3>
         </AccordionSummary>
         <AccordionDetails>
           <li>Default</li>
@@ -130,7 +130,7 @@ export default function AccordionUsage() {
           aria-controls="panel1-content"
           id="panel1-header"
         >
-          <i className="fa-solid fa-lock"></i><span>Authentication</span>
+          <i className="fa-solid fa-lock"></i> <span>Authentication</span>
         </AccordionSummary>
         <AccordionDetails >
           <li>Log In</li>

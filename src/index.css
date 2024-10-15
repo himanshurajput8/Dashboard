@@ -303,9 +303,22 @@ main{
   }
   
   aside.closed {
-    width: 10%; 
+    width: 15%; 
     overflow: hidden;
   }
+  aside.closed span{
+    display: none;
+  }
+  aside.closed li{
+    display: none;
+  }
+  aside.closed .dashboard{
+    display: none;
+  }
+  aside.closed h4{
+    display: none;
+  }
+
   aside.open{
     width: 50%;
   }
@@ -314,6 +327,7 @@ main{
     transform: rotate(180deg); 
     transition: transform 0.3s ease-in-out;
   }
+
 
 }
 
