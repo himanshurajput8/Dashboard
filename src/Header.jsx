@@ -1,6 +1,10 @@
 export function HeaderComponent(){
     return(
         <header>
+                        <div className='img-div'>
+                <h1>F</h1>
+                <h2>Front</h2>
+            </div>
             <div className="input-div">
             <i className="fa-solid fa-magnifying-glass"></i>
             <input type="search" placeholder="Search in front.."/>

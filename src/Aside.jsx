@@ -1,12 +1,17 @@
 import AccordionExpandIcon from './Accordian.jsx'
+import { useState } from 'react'
 
 export function AsideComponent(){
+        const [isOpen, setIsOpen] = useState(false); 
+    
+        const toggleSidebar = () => {
+            setIsOpen(!isOpen); 
+        };
     return(
-        <aside>
-            <div className='img-div'>
-                <h1>F</h1>
-                <h2>Front</h2>
-            </div>
+        <aside className={isOpen ? 'open' : 'closed'}>
+            <button onClick={toggleSidebar}>
+                <i className="fa-solid fa-arrow-right"></i>
+            </button>
             <AccordionExpandIcon/>
             <div>
                 <h4>Apps</h4>

@@ -8,26 +8,48 @@ aside{
   width: 15%;
   height: 100vh;
   overflow: scroll;
-  scrollbar-width: thin;
   border-right: 1px solid #ccc;
   position: fixed;
+  top: 10vh;
   background-color: white;
+  transition: all 0.3s ease-in-out;
 }
+aside::-webkit-scrollbar {
+  display: none; 
+}
+
+aside button {
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+  border: none;
+  background-color: white;
+
+}
+
+aside button i{
+  font-size: 1rem;
+}
+
 aside li{
   line-height: 35px;
   padding-left: 1rem;
 }
+
 aside i{
   color: rgba(0, 0, 0, 0.544);
   font-size: 0.8rem;
 }
+
 aside span{
   margin-left: 0.8rem;
 }
+
 aside h3{
   color: #377dff;
   margin-left: 0.8rem;
 }
+
 aside h4{
   margin: 1rem;
 }
@@ -37,8 +59,9 @@ aside h4{
   justify-content: center;
   align-items: center;
   gap: 30px;
-  padding: 10px 0px;
+  padding: 15px 0px;  
 }
+
 .img-div  h1{
   color: white;
   padding: 0.1rem 0.7rem;
@@ -56,11 +79,10 @@ aside h4{
   font-size: 2rem;
 }
 header{
-  width: 85%;
+  width: 100%;
   height: 10vh;
   position: fixed;  
   top: 0px;
-  left: 15vw; 
   display: flex;
   justify-content: space-between;
   align-items: center;  
@@ -74,22 +96,27 @@ header{
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+    
 }
 .input-div input{
   width: 30vw;
   height: 5vh;
   border: none;
   outline: none;
-  padding-left: 2.5vw;
+  padding-left: 3vw;
+  background-color: #f5f6f9;
+  border-radius: 1rem;
 }
 
 .input-div input:hover{
-  background-color: #f5f6f9;
+width: 50vw;
 }
 .input-div i{
   position: absolute;
   left: 1rem;
   font-size: 1rem;
+
 }
 header i{
   font-size: 1.2rem;
@@ -232,8 +259,10 @@ main{
 /* table code here */
 
 
+
+
 @media screen and (max-width: 600px) {
-  header i{
+    header i{
     font-size: 1.2rem;
     padding-right: 0.2rem; 
   }
@@ -241,6 +270,9 @@ main{
     width: 1.5rem;
     border-radius: 5rem;
     margin: 0rem ;    
+  }
+  .input-div i{
+    display: none;
   }
   .graph-div{
     grid-template-columns: repeat(1, 1fr);   
@@ -266,4 +298,20 @@ main{
     font-size: 12px;
   }
   
+  aside.closed {
+    width: 10%; 
+    overflow: hidden;
+  }
+  aside.open{
+    width: 50%;
+  }
+  
+  aside.open button i {
+    transform: rotate(180deg); 
+    transition: transform 0.3s ease-in-out;
+  }
+
 }
+
+
+
