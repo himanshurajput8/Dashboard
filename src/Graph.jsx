@@ -1,24 +1,24 @@
+import { useEffect, useState } from 'react';
 import { LineChart, Line } from 'recharts';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 
 export function GraphComponent() {
-  const data = [
-    { name: 'Page C', uv: 200, pv: 9800, amt: 2290 },
-    { name: 'Page D', uv: 278, pv: 3908, amt: 2000 },
-    { name: 'Page E', uv: 189, pv: 4800, amt: 2181 },
-    { name: 'Page F', uv: 239, pv: 3800, amt: 2500 },
-    { name: 'Page G', uv: 349, pv: 4300, amt: 2100 }
-    
-  ];
+  const[lineData, setLineData] = useState([])
 
+  useEffect(()=>{
+    fetch('api/lineChart')
+    .then(response => response.json())
+    .then(data=>{
+      setLineData(data.lineChart)
+    })
+  },[])
   // Render the line graph
   const renderLineChart = (
-    <LineChart width={150} height={100} data={data}>
+    <LineChart width={150} height={100} data={lineData}>
       <Line type="monotone" dataKey="uv" stroke="#377dff" />
     </LineChart>
   );
-
   return (
     <>
       {renderLineChart}
@@ -26,19 +26,23 @@ export function GraphComponent() {
   )
 }
 
-export function BarGraphComponent(){
-    const Bardata = [
-      {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 100, pv: 2400, amt: 2100},
-      {name: 'Page C', uv: 200, pv: 2400, amt: 2000},
-      {name: 'Page D', uv: 400, pv: 2400, amt: 2400},
-      {name: 'Page E', uv: 300, pv: 2400, amt: 2000}
 
-    ];
+
+export function BarGraphComponent(){
+   const [barData, setBarData] = useState([])
+   
+   useEffect(()=>{
+    fetch('/api/barChart')
+    .then(respose => respose.json())
+    .then(data => {
+      setBarData(data.barChart)
+    })
+    .catch(error => console.log('data not found', error))
+   },[])
 
     const renderBarChart = (
       <ResponsiveContainer width="100%" height={400}>
-        <BarChart data={Bardata} >
+        <BarChart data={barData} >
           <XAxis dataKey="name" stroke="#8884d8" />
           <YAxis />
           <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />

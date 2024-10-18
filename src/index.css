@@ -258,11 +258,100 @@ main{
 .graph-right-header div button:first-child{
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-/* table code here */
 
+.transaction-container{
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+.transaction-left-div h2, .transaction-right-div h2{
+  padding: 1rem 0rem;
+  border-bottom: 1px solid #cccccc61;
+  padding-left: 1rem;
+}
+.transaction-left-div, .transaction-right-div{
+  height: 60vh;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.transaction-left-div{
+  position: relative;
+}
+.sixtyFive, .nintyNine, .thirtyEight, .sixtyOne{
+  height: 9vh;
+  width: 10%;
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  background-color: #8333de;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.nintyNine{
+  height: 27vh;
+  width: 29%;
+  background-color: #4b8aff;
+  position: absolute;
+  left: 45%;
+  top: 10vh;
+  z-index: 5;
 
-
-
+}
+.thirtyEight{
+  height: 15vh;
+  width: 17%;
+  background-color: #00c9db;
+  position: absolute;
+  left: 41%;
+  top: 32vh;
+}
+.sixtyOne{
+  height: 16vh;
+  width: 18%;
+  background-color: #4338ca;
+  position: absolute;
+  left: 75%;
+  top: 35vh;
+}
+.sixtyFive{
+  height: 18vh;
+  width: 20%;
+  position: absolute;
+  left: 28%;
+  top: 20vh;
+  z-index: 3;
+}
+.transaction-left-div div:hover{
+ transform: scale(1.1);
+ transition: 0.5s;
+}
+.transaction-right-div{
+  padding: 0rem 1rem;
+}
+.transaction-right-div h1{
+  padding: 1rem;
+}
+.empty-div{
+  width: 100%; 
+  height: 1.2vh;
+  border-radius: 1rem;
+  background: rgb(55,125,255);
+background: linear-gradient(90deg, rgba(55,125,255,1) 30%, rgba(122,161,232,1) 30%, rgba(134,167,228,1) 67%, rgba(189,197,209,1) 67%);
+}
+.transaction-right-div table{
+  width: 100%;
+}
+.transaction-right-div td{
+  padding-top: 1.5rem;
+  border-bottom: 1px solid #cccccc61;
+}
 @media screen and (max-width: 600px) {
    header i{
     font-size: 1.2rem;
@@ -333,6 +422,9 @@ main{
     transition: transform 0.3s ease-in-out;
   }
 
+  .transaction-container{
+    flex-direction: column;
+  }
 
 }
 

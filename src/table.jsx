@@ -21,39 +21,10 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { useEffect, useState } from 'react';
 
 function createData(id, name, status, email, signup, userId) {
   return { id, name, status, email, signup, userId };
-}
-
-const rows = [
-  createData(1, 'Amanda Harvey', "🟢Successful", "amanda@site.com", "1 year ago", 67989),
-  createData(2, 'Annie Richard', "🟢Successful", "annie@site.com", "3 years ago", 67989),
-  createData(3, 'David Harrison', "🟡Pending", "david@site.com", "6 years ago", 67989),
-  createData(4, 'Finch Hoot', "🔴Failed", "finch@site.com", "1 year ago", 67989),
-  createData(5, 'Bob Dean', "🔵Pending", "bob@site.com", "3 years ago", 67989),
-  createData(6, 'David Richard', "🟢Successful", "davidr@site.com", "3 years ago", 67989),
-  createData(7, 'Ella Dean', "🔴Failed", "ella@site.com", "6 years ago", 67989),
-  createData(8, 'Sam Kart', "🟠Pending", "sam@site.com", "1 year ago", 67989),
-  createData(9, 'Costa Quinn', "🟢Successful", "costa@site.com", "6 years ago", 67989),
-  createData(10, 'Finch Hoot', "🟠Pending", "finchhoot@site.com", "1 year ago", 67989),
-  createData(11, 'Costa Quinn', "🟢Successful", "costaquinn@site.com", "1 year ago", 67989),
-];
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
 const headCells = [
@@ -63,6 +34,18 @@ const headCells = [
   { id: 'signup', numeric: true, disablePadding: false, label: 'Signup' },
   { id: 'userId', numeric: true, disablePadding: false, label: 'User ID' },
 ];
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) return -1;
+  if (b[orderBy] > a[orderBy]) return 1;
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
@@ -119,15 +102,16 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
+
   return (
     <Toolbar
-      sx={[
-        { pl: { sm: 2 }, pr: { xs: 1, sm: 1 } },
-        numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        },
-      ]}
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+        ...(numSelected > 0 && {
+          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        }),
+      }}
     >
       {numSelected > 0 ? (
         <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
@@ -160,12 +144,20 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export function EnhancedTable() {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('name');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('name');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then((response) => response.json())
+      .then((data) => setRows(data.users))
+      .catch((error) => console.error('Error fetching user data:', error));
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -195,7 +187,7 @@ export function EnhancedTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
     setSelected(newSelected);
@@ -214,20 +206,16 @@ export function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
   const isSelected = (id) => selected.indexOf(id) !== -1;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
+          <Table sx={{ minWidth: 750 }} size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -275,11 +263,7 @@ export function EnhancedTable() {
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -297,7 +281,7 @@ export function EnhancedTable() {
         />
       </Paper>
       <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />} 
+        control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
     </Box>

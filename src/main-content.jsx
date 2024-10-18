@@ -2,6 +2,7 @@
 import { GraphContainer } from './GraphDiv';
 import { GraphComponent } from './Graph.jsx';
 import { EnhancedTable } from './table.jsx';
+import { TransactionsComponent } from './Transaction.jsx';
 
 
 const dashboardData = [
@@ -17,7 +18,7 @@ export function MainContent() {
       <div className="heading-div">
         <h2>Dashboard</h2> 
         <button>
-          <i className="fa-solid fa-user"></i> 
+          <i className="fa-solid fa-user"></i> Invite User
         </button>
       </div>
       <div className="graph-div">
@@ -37,6 +38,7 @@ export function MainContent() {
         
         <GraphContainer/>
         <EnhancedTable/>
+        <TransactionsComponent/>
         
     </main>
   );
