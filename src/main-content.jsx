@@ -33,9 +33,8 @@ export function MainContent() {
           <GraphComponent/>
           </div>
           </>
-        ))}
-      </div>
-        
+        ))} 
+      </div>        
         <GraphContainer/>
         <EnhancedTable/>
         <TransactionsComponent/>

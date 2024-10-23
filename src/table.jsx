@@ -101,7 +101,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, handleDelete, searchQuery, setSearchQuery } = props;
 
   return (
     <Toolbar
@@ -118,13 +118,22 @@ function EnhancedTableToolbar(props) {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
-          Users
-        </Typography>
+        <>
+          <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
+            Users
+          </Typography>
+          <input
+            type="text"
+            placeholder="Search by name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{ marginLeft: 'auto', padding: '5px' }}
+          />
+        </>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -141,6 +150,9 @@ function EnhancedTableToolbar(props) {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string.isRequired,
+  setSearchQuery: PropTypes.func.isRequired,
 };
 
 export function EnhancedTable() {
@@ -151,6 +163,7 @@ export function EnhancedTable() {
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch('/api/users')
@@ -193,6 +206,12 @@ export function EnhancedTable() {
     setSelected(newSelected);
   };
 
+  const handleDelete = () => {
+    const newRows = rows.filter((row) => !selected.includes(row.id));
+    setRows(newRows);
+    setSelected([]);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -208,14 +227,21 @@ export function EnhancedTable() {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-  
+
+  // Filter the rows based on the search query
+  const filteredRows = rows.filter((row) => row.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          handleDelete={handleDelete}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
         <TableContainer>
-          <Table sx={{ minWidth: 750 }} size={dense ? 'small' : 'medium'}>
+          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -225,9 +251,7 @@ export function EnhancedTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {rows
-                .slice()
-                .sort(getComparator(order, orderBy))
+              {filteredRows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -244,13 +268,7 @@ export function EnhancedTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
+                        <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.name}
@@ -273,17 +291,14 @@ export function EnhancedTable() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
+          count={filteredRows.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+      <FormControlLabel control={<Switch checked={dense} onChange={handleChangeDense} />} label="Dense padding" />
     </Box>
   );
 }

@@ -1,7 +1,7 @@
 export function HeaderComponent(){
     return(
         <header>
-                        <div className='img-div'>
+                <div className='img-div'>
                 <h1>F</h1>
                 <h2>Front</h2>
             </div>
